@@ -427,3 +427,17 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Project-local .NET/F# build output
+/bin/
+/obj/
+/.vs/
+/.ionide/
+/.fake/
+*.fsproj.user
+
+# Local-only test scripts
+/Tests.fsx
+
+# Local game data
+/high_scores.txt
