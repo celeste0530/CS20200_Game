@@ -54,12 +54,21 @@ dotnet run -- --reset-scores
 - The final score is the number of turns survived.
 - Best scores are saved separately for each grid size in `high_scores.txt`.
 
+## Details of requirements.md
+
+The following details are clarified after the original requirements document was written. The main game remains the same: the player moves inside the grid and survives by avoiding randomly generated moving walls.
+
+- An outer one-cell preview ring was added to show where new walls will enter on the next turn. The original requirements stated that walls are randomly produced along the boundary, but displaying a wall only after it entered the grid gave the player no way to anticipate it. The preview ring makes the existing wall generation rule visible and the game behavior easier to understand.
+- When two adjacent walls move across each other's previous positions during the same turn, both walls are destroyed. The original requirements already specified that walls moving into the same cell are destroyed. This additional case makes the collision rule consistent when two walls pass through each other between cells.
+- A high-score file and commands for listing and resetting scores were added as optional features. They do not change the original final score rule.
+
 ## Use LLM
 
 Large Language Models were used as an assistant during this project.
 
 - LLM assistance was used to draft and revise F# code for the game and README documentation.
 - When the game rules and desired behavior were provided, LLM assistance was used to translate them into F# game code.
-- When LLM-generated code did not behave as expected, the developer suggested which parts might be incorrect and provided the expected behavior so that LLM assistance could identify the cause.
-- During this process, the developer also suggested parts that seemed incorrect.
-- When testing edge cases, LLM assistance was used to create sample cases and test whether the game logic handled them correctly.
+- When LLM-generated code did not behave as expected, the developer identified the relevant cases and provided the expected results before asking the LLM to revise the implementation.
+- The main issue that required correction was wall collision handling. In particular, the implementation needed to handle walls moving into the same cell, adjacent walls crossing each other, walls leaving the grid, and collisions between a player and a wall that exchange positions during one turn.
+- The developer reviewed the generated code and used concrete edge cases to check the order in which wall collisions and wall movement are resolved.
+- LLM assistance was also used to create sample tests for these edge cases and verify the resulting behavior.
